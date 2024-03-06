@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {},
     //add the styles to overwrite tailwind styles
-    container: { padding: "10rem" },
+    container: { padding: "2rem" },
   },
   plugins: [],
 };
