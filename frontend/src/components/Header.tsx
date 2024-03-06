@@ -9,7 +9,7 @@ const Header = () =>{
             </span>
 
             <span className="flex space-x-2">
-               <Link to="/sign-in" className="flex items-center text-white px-3 font-bold hover:text-gray-500 ">Sign In</Link>
+               <Link to="/sign-in" className="flex items-center text-white px-3 font-bold hover:text-gray-500 lg:mr-80 ">Sign In</Link>
             </span>
         </div>
   
