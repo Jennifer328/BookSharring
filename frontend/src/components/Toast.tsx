@@ -20,7 +20,7 @@ const Toast = ({message, type, onClose}: ToastProps) => {
   },[onClose])
 
   const styles = type ==="SUCCESS"
-  ? "absolute top-5 right-4 z-50 p-4 rounded-md bg-orange-900 text-white max-w-sm"
+  ? "absolute top-5 right-4 z-50 p-4 rounded-md bg-orange-900 text-white text-xs lg:text-lg  max-w-sm"
   : "absolute top-5 right-4 z-50 p-4 rounded-md bg-red-600 text-white max-w-sm"
   return (
     <div className={styles}>
