@@ -1,6 +1,8 @@
-import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useForm} from "react-hook-form";
+import { useMutation,useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
+import { useAppContext } from "../contexts/AppContext";
+import { useNavigate, Link} from "react-router-dom";
 
 export type SignInFormData = {
   email: string;
@@ -10,6 +12,11 @@ export type SignInFormData = {
 
 
 const SignIn = () => {
+
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();//library for fetching, caching, and updating data in React applications. Here is it used to update UI to reflect the latest data
+
+  const {showToast} = useAppContext();
   const {register,
         formState:{errors},
         handleSubmit
@@ -20,10 +27,16 @@ const SignIn = () => {
       console.log("User logged in");
       
       //1. show the toast
+      showToast({message: "Sign in Successful!", type: "SUCCESS"});
+      //2. update UI
+      await queryClient.invalidateQueries("validateToken");
       //2. navigate to the home page
+      navigate("/");
+
     },
     onError: (error: Error) =>{
       //show the toast
+       showToast({message: error.message, type:"ERROR"});
     }
   });
   
@@ -53,7 +66,8 @@ const SignIn = () => {
 
        
 
-        <span>
+        <span className="flex items-center justify-between">
+          <span className="text-xs lg:text-sm">Not Registered? <Link className="underline" to="/register">Create an account here</Link></span>
           <button type="submit" className="bg-green-600 rounded-md text-xs text-white p-2 font-bold hover:bg-green-400">Login</button>
         </span>
     </form>
