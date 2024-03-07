@@ -15,7 +15,7 @@ const Header = () =>{
               {isLoggedIn ?
                <>
                 <Link className="text-xs flex items-center text-white px-2 font-bold hover:text-gray-500 " to="/my-lectures">Orders</Link>
-                <Link className="text-xs flex items-center text-white px-2 font-bold hover:text-gray-500 " to="/my-lectures">Books</Link>
+                <Link className="text-xs flex items-center text-white px-2 font-bold hover:text-gray-500 " to="/my-lectures">My Books</Link>
                 <SignOutButton />
               </>
               :<Link to="/sign-in" className="text-xs flex items-center text-white px-3 font-bold hover:text-gray-500 ">Sign In</Link>}
