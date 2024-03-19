@@ -4,6 +4,8 @@ import "dotenv/config";
 import mongoose from 'mongoose';
 import userRoutes from './routes/users';
 import authRoutes from './routes/auth';
+import myBooksRoutes from "./routes/my-books";
+
 import cookieParser from "cookie-parser";
 import path from 'path';
 
@@ -33,6 +35,7 @@ app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use("/api/users",userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/my-books",myBooksRoutes);
 
 app.listen(process.env.PORT, ()=>{
   console.log(`server is running on port ${process.env.PORT}`);

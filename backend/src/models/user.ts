@@ -1,16 +1,16 @@
 
-import mongoose, {Schema,Document} from 'mongoose';
+import mongoose, {Document} from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-//create an interface that extends mongoose.Document to include the user fields. This interface will be used to type-check the documents returned from queries.
-interface User extends Document{
+
+export type UserType ={
   email: string;
   password: string;
   firstName: string;
   lastName: string;
 };
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<UserType>({
   email:{type: String,required: true, unique: true},
   password:{type: String,required: true},
   firstName:{type: String,required: true},
@@ -26,6 +26,6 @@ userSchema.pre("save", async function(next){
   }
   next();
 })
-const User = mongoose.model<User>("User", userSchema);
+const User = mongoose.model<UserType>("User", userSchema);
 
 export default User;
