@@ -9,7 +9,7 @@ export type BookType = {
   city: string;
   description: string;
   type:string;
-  readerAge: number;
+  readerAge: string;
   pricePerWeek:number;
   starRating: number;
   imageUrls: string[];
@@ -23,7 +23,7 @@ const bookSchema = new mongoose.Schema<BookType>({
     city:{type:String, required: true},
     description:{type:String, required: true},
     type:{type:String, required: true},
-    readerAge:{type:Number, required: true},
+    readerAge:{type:String, required: true},
     pricePerWeek:{type:Number, required: true},
     starRating: {type:Number, required: true, min: 1, max:5},
     imageUrls:[{type:String, required: true}],
