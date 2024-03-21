@@ -2,6 +2,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import DetailsSection from "./DetailsSection";
 import TypeSection from "./TypeSection";
 import ReaderAgeSection from "./ReaderAgeSection";
+import ImagesSection from "./ImagesSection";
 
 export type BookFormData = {
   name: string;
@@ -12,7 +13,8 @@ export type BookFormData = {
   readerAge: string;
   pricePerWeek:number;
   starRating: number;
-  imageUrls: FileList;
+  imageFiles: FileList;
+  imageUrls: string[];
 }
 
 const ManageHotelForm = () => {
@@ -24,6 +26,7 @@ const ManageHotelForm = () => {
         <DetailsSection/>
         <TypeSection/>
         <ReaderAgeSection/>
+        <ImagesSection />
       </form>
     </FormProvider>
     
