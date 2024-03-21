@@ -13,8 +13,11 @@ const ReaderAgeSection = () => {
       <div className="text-xs md:text-base grid grid-cols-2 gap-x-10  md:grid-cols-4 md:gap-x-0  gap-y-3">
       {readerAge.map(age =>(
           <label className="flex gap-1 text-sm text-gray-700">
-             <input type="checkbox" value={age} {...register("readerAge",{
-              validate:(readerAge)=>{
+             <input 
+               type="checkbox" 
+               value={age} 
+               {...register("readerAge",{
+                 validate:(readerAge)=>{
                  if(readerAge && readerAge.length > 0){
                      return true;
                  }else{

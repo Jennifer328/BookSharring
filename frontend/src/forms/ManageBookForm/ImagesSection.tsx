@@ -10,7 +10,8 @@ const ImagesSection = () => {
     <div className="w-11/12 md:w-9/12 max-w-[475px]   mx-auto">
       <h2 className="text-2xl font-bold mb-3">Images</h2>
       <div className="border rounded p-4 flex flex-col gap-4">
-         <input type="file"
+         <input 
+         type="file"
          multiple
          accept="image/*"
          className="w-full text-gray-700 font-normal"

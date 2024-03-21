@@ -25,7 +25,7 @@ const DetailsSection = () => {
           </label>
 
           <label className="text-gray-500 text-sm font-bold flex-1">Community
-            <input className="border rounded w-full py-1 px-2 font-normal" {...register("city",{required: "This field is required"})} type="text" />
+            <input className="border rounded w-full py-1 px-2 font-normal" {...register("community",{required: "This field is required"})} type="text" />
             {errors.community && (
               <span className="text-red-500">{errors.community.message}</span>
             )}
@@ -41,7 +41,7 @@ const DetailsSection = () => {
 
         
           <label className="text-gray-500 text-sm font-bold max-w-[50%]">Price Per Week (CAD)
-            <input className="border rounded w-full py-1 px-2 font-normal" {...register("city",{required: "This field is required"})} type="number" min={1} />
+            <input className="border rounded w-full py-1 px-2 font-normal" {...register("pricePerWeek",{required: "This field is required"})} type="number" min={1} />
             {errors.pricePerWeek && (
               <span className="text-red-500">{errors.pricePerWeek.message}</span>
             )}
