@@ -37,6 +37,11 @@ app.use("/api/users",userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/my-books",myBooksRoutes);
 
+//FOR DEPLOY USE
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+});
+
 app.listen(process.env.PORT, ()=>{
   console.log(`server is running on port ${process.env.PORT}`);
   
