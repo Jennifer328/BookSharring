@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use("/api/users",userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/my-books",myBooksRoutes);
+app.use("/api/mybooks",myBooksRoutes);
 
 //FOR DEPLOY USE
 app.get("*", (req: Request, res: Response) => {
