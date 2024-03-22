@@ -4,7 +4,7 @@ import "dotenv/config";
 import mongoose from 'mongoose';
 import userRoutes from './routes/users';
 import authRoutes from './routes/auth';
-import myBooksRoutes from "./routes/my-books";
+import myBooksRoutes from "./routes/mybooks";
 
 import cookieParser from "cookie-parser";
 import path from 'path';

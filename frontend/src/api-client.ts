@@ -62,14 +62,14 @@ export const signOut = async () =>{
 }
 
 export const addMyBook = async (BookFormData: FormData) =>{
-   const response = await fetch(`${API_BASE_URL}/api/my-books`, {
+   const response = await fetch(`${API_BASE_URL}/api/mybooks`, {
     method: "POST",
     credentials: "include",
     body: BookFormData,
    });
 
    if(!response.ok){
-    throw new Error("Failed to add hotel");
+    throw new Error("Failed to add book");
    }
 
    return response.json;
