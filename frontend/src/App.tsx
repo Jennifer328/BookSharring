@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
 import AddBook from "./pages/AddBook";
 import { useAppContext } from "./contexts/AppContext";
+import MyBooks from "./pages/MyBooks";
 
 
 const App = () =>{
@@ -19,6 +20,7 @@ const App = () =>{
         <Route path="/sign-in"  element={<Layout><SignIn/></Layout>}/>
         {isLoggedIn && <>
           <Route path="/addbook" element={<Layout><AddBook/></Layout>}/>
+          <Route path="/mybooks" element={<Layout><MyBooks/></Layout>}/>
         </>}
         <Route path="/*"  element={<Navigate to="/"/>}/>
       </Routes>

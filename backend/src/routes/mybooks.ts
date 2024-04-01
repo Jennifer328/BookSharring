@@ -15,7 +15,7 @@ const upload = multer({
   },
 });
 
-//api/my-books
+//api/mybooks
 router.post("/",
            verifyToken,
            [body("name").notEmpty().withMessage('Name is required'),
@@ -70,4 +70,16 @@ router.post("/",
               return imageUrls;
              }
 
+
+router.get("/", verifyToken, async(req : Request, res : Response) =>{
+    
+      
+      try{
+        const books = await Book.find({userId: req.userId});
+        res.json(books);
+
+      }catch(e){
+        res.status(500).json({message: "Error fetching books"});
+      }
+})
 export default router;

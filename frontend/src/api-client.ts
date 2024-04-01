@@ -1,6 +1,7 @@
 
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
+import {BookType} from "../../backend/src/models/book";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -73,4 +74,15 @@ export const addMyBook = async (BookFormData: FormData) =>{
    }
 
    return response.json;
+}
+
+export const fetchMyBooks = async(): Promise<BookType[]> =>{ //make frontend and backend using the same type
+  const response = await fetch(`${API_BASE_URL}/api/mybooks`,{
+    credentials: "include"
+  });
+  if(!response.ok){
+    throw new Error("Error fetching books");
+  }
+
+  return response.json();
 }

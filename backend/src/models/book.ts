@@ -30,5 +30,5 @@ const bookSchema = new mongoose.Schema<BookType>({
     lastUpdated: {type:Date, required: true}
 });
 
-const Book = mongoose.model<BookType>("Hotel", bookSchema);
+const Book = mongoose.model<BookType>("Book", bookSchema);
 export default Book;
