@@ -2,6 +2,7 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import {BookType} from "../../backend/src/shared/types";
+import ManageBookForm from "./forms/ManageBookForm/ManageBookForm";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
@@ -95,6 +96,20 @@ export const fetchMyBookById = async (bookId : string): Promise<BookType> =>{
   });
   if(!response.ok){
     throw new Error("Error fetching Books");
+  }
+
+  return response.json();
+}
+
+export const updateMyBookById = async (bookFormData : FormData) =>{
+  const response = await fetch(`${API_BASE_URL}/api/mybooks/${bookFormData.get(`bookId`)}`, {
+    credentials: "include",
+    method: "PUT",
+    body: bookFormData
+  });
+
+  if(!response.ok){
+    throw new Error("Fail to update book");
   }
 
   return response.json();

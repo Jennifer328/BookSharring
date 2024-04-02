@@ -126,6 +126,7 @@ router.put(
                         ...(updatedBook.imageUrls || [] ) //existing images
                       ];
       await book.save();
+      res.status(201).json(book);
 
     }catch(e){
       res.status(500).json({message: "Something went wrong"});
