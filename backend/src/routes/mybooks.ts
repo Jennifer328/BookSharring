@@ -96,5 +96,40 @@ router.get("/:id",verifyToken, async(req:Request, res: Response) =>{
   }catch(e){
     res.status(500).json({message: "Error finding books" });
   }
-})
+});
+
+
+router.put(
+  "/:bookId",
+   verifyToken, 
+   upload.array("imageFiles"),
+   async (req :Request, res: Response) =>{
+    try{
+      const updatedBook : BookType = req.body;
+      updatedBook.lastUpdated = new Date();
+      const book = await Book.findOneAndUpdate({
+        _id: req.params.bookId,
+        userId: req.userId
+      }, 
+      updatedBook,
+      {new: true});
+
+      if(!book){
+        return res.status(404).json({message: "Book not found"});
+      }
+
+      const files = req.files as Express.Multer.File[];
+      const updatedImageUrls = await uploadImages(files);
+
+      book.imageUrls = [
+                        ...updatedImageUrls,  //newly uploaded images
+                        ...(updatedBook.imageUrls || [] ) //existing images
+                      ];
+      await book.save();
+
+    }catch(e){
+      res.status(500).json({message: "Something went wrong"});
+    }
+   });
+
 export default router;
