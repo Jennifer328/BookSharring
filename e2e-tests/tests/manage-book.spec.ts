@@ -16,7 +16,7 @@ test.beforeEach(async({page}) =>{
 });
 
 test("should allow user to add a book", async ({page}) =>{
-  await page.goto(`${UI_URL}add-book`);
+  await page.goto(`${UI_URL}addbook`);
   await page.locator(`[name="name"]`).fill("Test Add Book"); 
   await page.locator(`[name="city"]`).fill("Test City"); 
   await page.locator(`[name="community"]`).fill("Test Community"); 
@@ -34,4 +34,19 @@ test("should allow user to add a book", async ({page}) =>{
 
   await page.getByRole('button', {name:"Save"}).click();
   await expect(page.getByText("Book Saved!")).toBeVisible();
-})
+});
+
+test("should display books", async({page}) =>{
+  await page.goto(`${UI_URL}mybooks`);
+  await expect(page.getByText("Designing Data-Intensive Applications")).toBeVisible();
+  await expect(page.getByText("Data is at the center of many challenges in system design today.")).toBeVisible();
+  await expect(page.getByText("Montréal,NDG")).toBeVisible();
+  await expect(page.getByText("Reference")).toBeVisible();
+  await expect(page.getByText("CAD2 per week")).toBeVisible();
+  await expect(page.getByText("16-17 years18 years and up")).toBeVisible();
+  await expect(page.getByText("4 star rating")).toBeVisible();
+
+  await expect(page.getByRole("link", {name: "View Details"}).first()).toBeVisible();
+  await expect(page.getByRole("link", {name: "Add Book"})).toBeVisible();
+
+});
