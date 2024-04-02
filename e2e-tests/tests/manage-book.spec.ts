@@ -50,3 +50,17 @@ test("should display books", async({page}) =>{
   await expect(page.getByRole("link", {name: "Add Book"})).toBeVisible();
 
 });
+
+
+test("should edit book", async({page}) =>{
+  await page.goto(`${UI_URL}mybooks`);
+
+  await page.getByRole("link", {name: "View Details"}).first().click();
+  await page.waitForSelector('[name="name"]', {state: "attached"});
+
+  await expect(page.locator('[name="name"]')).toHaveValue('Test Add Book');
+  await page.locator('[name="name"]').fill("Test Add Book UPDATED")
+  await page.getByRole("button", {name: "Save"}).click();
+
+  await expect(page.getByText("Book Saved!")).toBeVisible();
+})
