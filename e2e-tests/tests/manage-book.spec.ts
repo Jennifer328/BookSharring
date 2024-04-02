@@ -63,4 +63,9 @@ test("should edit book", async({page}) =>{
   await page.getByRole("button", {name: "Save"}).click();
 
   await expect(page.getByText("Book Saved!")).toBeVisible();
+
+  //check if name still remains updated after page reload.
+  await page.reload();
+  await expect(page.locator('[name="name"]')).toHaveValue("Test Add Book UPDATED");
+  await page.locator('[name="name"]').fill('Test Add Book');
 })
