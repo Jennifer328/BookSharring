@@ -2,7 +2,7 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import {BookType} from "../../backend/src/shared/types";
-import ManageBookForm from "./forms/ManageBookForm/ManageBookForm";
+
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
@@ -101,11 +101,11 @@ export const fetchMyBookById = async (bookId : string): Promise<BookType> =>{
   return response.json();
 }
 
-export const updateMyBookById = async (bookFormData : FormData) =>{
-  const response = await fetch(`${API_BASE_URL}/api/mybooks/${bookFormData.get(`bookId`)}`, {
+export const updateMyBookById = async (BookFormData : FormData) =>{
+  const response = await fetch(`${API_BASE_URL}/api/mybooks/${BookFormData.get(`bookId`)}`, {
     credentials: "include",
     method: "PUT",
-    body: bookFormData
+    body: BookFormData
   });
 
   if(!response.ok){

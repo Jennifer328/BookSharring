@@ -55,6 +55,12 @@ const ManageBookForm = ({onSave,isLoading, book} : Props) => {
     //   formData.append(`readerAge[${index}]`,age);
     // });
 
+    if(formDataJson.imageUrls){
+      formDataJson.imageUrls.forEach((url, index) =>{
+        formData.append(`imageUrls[${index}]`,url);
+      })
+    }
+
     Array.from(formDataJson.imageFiles).forEach((imageFile) =>{
          formData.append(`imageFiles`, imageFile);
     });
