@@ -82,5 +82,19 @@ router.get("/", verifyToken, async(req : Request, res : Response) =>{
       }catch(e){
         res.status(500).json({message: "Error fetching books"});
       }
+});
+
+
+router.get("/:id",verifyToken, async(req:Request, res: Response) =>{
+  const id = req.params.id.toString();
+  try{
+   const book = await Book.findOne({
+    _id: id,
+    userId: req.userId, //to make sure only the book belongs to certain user can be parsed
+   })
+   res.json(book);
+  }catch(e){
+    res.status(500).json({message: "Error finding books" });
+  }
 })
 export default router;

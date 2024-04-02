@@ -87,3 +87,15 @@ export const fetchMyBooks = async(): Promise<BookType[]> =>{ //make frontend and
 
   return response.json();
 }
+
+
+export const fetchMyBookById = async (bookId : string): Promise<BookType> =>{
+  const response = await fetch(`${API_BASE_URL}/api/mybooks/${bookId}`,{
+    credentials: "include"
+  });
+  if(!response.ok){
+    throw new Error("Error fetching Books");
+  }
+
+  return response.json();
+}

@@ -3,6 +3,8 @@ import DetailsSection from "./DetailsSection";
 import TypeSection from "./TypeSection";
 import ReaderAgeSection from "./ReaderAgeSection";
 import ImagesSection from "./ImagesSection";
+import { BookType } from "../../../../backend/src/shared/types";
+import { useEffect } from "react";
 
 export type BookFormData = {
   name: string;
@@ -10,38 +12,48 @@ export type BookFormData = {
   city: string;
   description: string;
   type:string;
-  readerAge: string[];
+  readerAge: string;
   pricePerWeek:number;
   starRating: number;
   imageFiles: FileList;
   imageUrls: string[];
 }
 
+
 type Props = {
-  onSave: (BookFormData: FormData)=>void,
+  book?: BookType;
+  onSave: (BookFormData: FormData)=>void;
   isLoading: boolean
 }
 
-const ManageHotelForm = ({onSave,isLoading} : Props) => {
+const ManageBookForm = ({onSave,isLoading, book} : Props) => {
 
   const formMethods = useForm<BookFormData>();
-  const {handleSubmit} = formMethods;
+  const {handleSubmit, reset} = formMethods;
+
+  useEffect(() =>{
+      reset(book);
+  },[book,reset])
+
   const onSubmit = handleSubmit((formDataJson: BookFormData) =>{
     //create new FormData object & call API
    
     const formData = new FormData();
+    if(book){
+      formData.append("bookId",book._id);
+    }
     formData.append("name",formDataJson.name);
     formData.append("city",formDataJson.city);
     formData.append("community",formDataJson.community);
     formData.append("description",formDataJson.description);
     formData.append("type",formDataJson.type);
-    //formData.append("readerAge",formDataJson.readerAge);
+    formData.append("readerAge",formDataJson.readerAge);
     formData.append("pricePerWeek",formDataJson.pricePerWeek.toString());
     formData.append("starRating",formDataJson.starRating.toString());
     
-    formDataJson.readerAge.forEach((age, index) => {
-      formData.append(`readerAge[${index}]`,age);
-    });
+    // formDataJson.readerAge.forEach((age, index) => {
+    //   formData.append(`readerAge[${index}]`,age);
+    // });
 
     Array.from(formDataJson.imageFiles).forEach((imageFile) =>{
          formData.append(`imageFiles`, imageFile);
@@ -71,4 +83,5 @@ const ManageHotelForm = ({onSave,isLoading} : Props) => {
   )
 }
 
-export default ManageHotelForm
+export default ManageBookForm
+

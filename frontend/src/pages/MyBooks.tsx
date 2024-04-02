@@ -56,7 +56,7 @@ const MyBooks = () => {
                 </div>
               </div>
               <span className="flex justify-end">
-                <Link to={`/edit-book/${book._id}`} 
+                <Link to={`/editbook/${book._id}`} 
                 className="flex bg-green-500 text-white text-xl font-bold p-2 hover:bg-green-600">
                   View Details</Link>
               </span>
