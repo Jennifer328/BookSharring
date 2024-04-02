@@ -8,10 +8,18 @@ const ImagesSection = () => {
         register, 
         formState:{errors},
         watch,
+        setValue,
        }
          = useFormContext<BookFormData>();
 
          const existingImageUrls = watch("imageUrls");
+         const handleDelete = (
+          event: React.MouseEvent<HTMLButtonElement, MouseEvent>, 
+          imageUrl: string
+          ) => {
+           event.preventDefault();
+           setValue("imageUrls", existingImageUrls.filter((url)=> url !== imageUrl))
+         }
 
   return (
     <div className="w-11/12 md:w-9/12 max-w-[475px]   mx-auto">
