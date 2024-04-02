@@ -1,9 +1,10 @@
 import express, {Request, Response} from "express";
 import multer from "multer";
 import cloudinary from "cloudinary";
-import Book, { BookType } from "../models/book";
+import Book from "../models/book";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
+import { BookType } from "../shared/types";
 
 const router = express.Router();
 
