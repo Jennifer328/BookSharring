@@ -1,7 +1,7 @@
 
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import {BookType} from "../../backend/src/shared/types";
+import {BookSearchResponse, BookType} from "../../backend/src/shared/types";
 
 
 
@@ -110,6 +110,30 @@ export const updateMyBookById = async (BookFormData : FormData) =>{
 
   if(!response.ok){
     throw new Error("Fail to update book");
+  }
+
+  return response.json();
+};
+
+
+export type SearchParams = {
+  city?: string;
+  starting?: string;
+  returnDate?: string;
+  page?: string;
+}
+
+export const searchBooks = async (searchParams: SearchParams): Promise<BookSearchResponse> =>{
+  const queryParams = new URLSearchParams();
+  queryParams.append("city", searchParams.city || "");
+  queryParams.append("starting", searchParams.starting || "");
+  queryParams.append("returnDate", searchParams.returnDate || "");
+  queryParams.append("page", searchParams.page|| "");
+
+  const response = await fetch(`${API_BASE_URL}/api/books/search?${queryParams}`);
+
+  if(!response.ok){
+    throw new Error("Error fetching books");
   }
 
   return response.json();
