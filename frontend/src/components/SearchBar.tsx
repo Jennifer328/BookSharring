@@ -1,11 +1,14 @@
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSearchContext } from "../contexts/SearchContext"
 import { MdTravelExplore } from "react-icons/md";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"; //default datepicker css
 
 
 const SearchBar = () => {
+
+  const navigate = useNavigate();
 
   const search = useSearchContext();
   const [city, setCity] = useState<string>(search.city);
@@ -16,6 +19,7 @@ const SearchBar = () => {
   const handleSubmit = (event : FormEvent) =>{
         event.preventDefault();
         search.saveSearchValues(city, starting, returnDate);
+        navigate("/search");
   };
 
   const minDate = new Date();
@@ -25,7 +29,7 @@ const SearchBar = () => {
   return (
     <form 
     onSubmit={handleSubmit}
-    className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4">
+    className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 items-center gap-4">
        <div className="flex flex-row items-center flex-1 bg-white p-2">
         <MdTravelExplore  size={25} className="mr-2"/>
         <input placeholder="type a city to search" 
@@ -46,6 +50,7 @@ const SearchBar = () => {
              maxDate={maxDate}
              placeholderText="Starting Date"
              className="text-xs min-w-full bg-white p-2 focus:outline-none"
+             wrapperClassName="min-w-full"
              />
        </div>
 
@@ -60,7 +65,18 @@ const SearchBar = () => {
              maxDate={maxDate}
              placeholderText="Starting Date"
              className="text-xs min-w-full bg-white p-2 focus:outline-none"
+             wrapperClassName="min-w-full"
              />
+       </div>
+
+       <div className="flex gap-2">
+        <button className="w-2/3 bg-green-600 text-white h-full font-bold text-xl px-2 lg:px-5 hover:bg-green-500">
+           Search
+        </button>
+
+        <button className="w-2/3 bg-red-600 text-white h-full font-bold text-xl px-2 lg:px-5 hover:bg-red-400">
+           Clear
+        </button>
        </div>
     
     </form>
