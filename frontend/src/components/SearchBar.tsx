@@ -1,6 +1,8 @@
 import { FormEvent, useState } from "react";
 import { useSearchContext } from "../contexts/SearchContext"
 import { MdTravelExplore } from "react-icons/md";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const SearchBar = () => {
@@ -16,6 +18,10 @@ const SearchBar = () => {
         search.saveSearchValues(city, starting, returnDate);
   };
 
+  const minDate = new Date();
+  const maxDate = new Date();
+  maxDate.setMonth(maxDate.getMonth() + 1); // maxima date of borrowing is 1 month
+
   return (
     <form 
     onSubmit={handleSubmit}
@@ -27,7 +33,34 @@ const SearchBar = () => {
                value={city}
                onChange={(event)=>{setCity(event.target.value)}}
                />
+       </div>
 
+       <div className="flex bg-white px-2 py-1 gap-2">
+           <DatePicker 
+             selected={starting} 
+             onChange={(date) =>setStarting(date as Date)} 
+             selectsStart
+             startDate={starting}
+             endDate={returnDate}
+             minDate={minDate}
+             maxDate={maxDate}
+             placeholderText="Starting Date"
+             className="text-xs min-w-full bg-white p-2 focus:outline-none"
+             />
+       </div>
+
+       <div className="flex bg-white px-2 py-1 gap-2">
+           <DatePicker 
+             selected={returnDate} 
+             onChange={(date) =>setReturnDate(date as Date)} 
+             selectsStart
+             startDate={returnDate}
+             endDate={returnDate}
+             minDate={minDate}
+             maxDate={maxDate}
+             placeholderText="Starting Date"
+             className="text-xs min-w-full bg-white p-2 focus:outline-none"
+             />
        </div>
     
     </form>
