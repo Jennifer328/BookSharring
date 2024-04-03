@@ -18,18 +18,18 @@ const MyBooks = () => {
     return <span>No Book found</span>
   }
   return (
-    <div className="space-y-5">
+    <div className="space-y-5  text-xs lg:text-base">
       <span className="flex justify-between">
-        <h1 className="text-3xl font-bold mb-3">My Books</h1>
+        <h1 className="text-2xl lg:text-3xl font-bold mb-3">My Books</h1>
         <Link to="/addbook" className="flex bg-green-500 text-white text-xl font-bold p-2 hover:bg-green-600">Add Book</Link>
       </span>
 
-      <div className="grid grid-cols-1 gap -8">
+      <div className="grid grid-cols-1 gap-8">
         {bookData.map(book =>(
           <div className="flex flex-col justify-between border border-slate-300 rounded-lg p-8 gap-5">
-              <h2 className="text-2xl font-bold">{book.name}</h2>
+              <h2 className="text-lg lg:text-xl font-bold">{book.name}</h2>
               <div className="whitespace-pre-line">{book.description}</div>
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
                 <div className="border border-slate-300 rounded-sm p-3 flex items-center">
                   <BsMap className="mr-1"/>
                   {book.city},{book.community}

@@ -12,3 +12,12 @@ export type BookType = {
   imageUrls: string[];
   lastUpdated: Date;
 };
+
+export type BookSearchResponse = {
+  data: BookType[];
+  pagination: {
+    total: number;
+    page: number;
+    pages: number;
+  }
+};
