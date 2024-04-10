@@ -17,7 +17,7 @@ export type BookSearchResponse = {
   data: BookType[];
   pagination: {
     total: number;
-    page: number;
     pages: number;
-  }
+    page: number;
+  };
 };

@@ -6,7 +6,7 @@ import { useState } from "react";
 const Search = () => {
 
   const search = useSearchContext();
-  const {page, setPage} = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
 
   const searchParams = {
     city : search.city,
@@ -15,7 +15,7 @@ const Search = () => {
     page: page.toString(),
   };
 
-  const {data: bookData} = useQuery(["searchBooks", searchParams], ()=> apiClient.searchBooks(searchParams))
+  const {data: bookData} = useQuery(["searchBooks", searchParams], ()=> apiClient.searchBooks(searchParams));
   
   return (
     <div>Search</div>
