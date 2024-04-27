@@ -18,7 +18,10 @@ type SearchContextProviderProps = {
 
 export const SearchContextProvider = ({children} : SearchContextProviderProps) =>{
 
-  const [city,setCity] = useState<string>("");
+  //const [city,setCity] = useState<string>("");
+  const [city, setCity] = useState<string>(
+    () => sessionStorage.getItem("city") || ""
+  );
   const [starting,setStarting] = useState<Date>(new Date);
   const [returnDate,setReturnDate] = useState<Date>(new Date);
   const [bookId,setBookId] = useState<string>("");

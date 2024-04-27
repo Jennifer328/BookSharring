@@ -6,7 +6,7 @@ import { BookSearchResponse } from "../shared/types";
 
 const router = express.Router();
 
-// /api/hotels/search?
+// /api/books/search?
 router.get("/search", async (req: Request, res:Response) =>{
     try{
 
