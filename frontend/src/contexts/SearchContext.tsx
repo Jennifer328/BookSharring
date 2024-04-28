@@ -18,13 +18,23 @@ type SearchContextProviderProps = {
 
 export const SearchContextProvider = ({children} : SearchContextProviderProps) =>{
 
-  //const [city,setCity] = useState<string>("");
-  const [city, setCity] = useState<string>(
-    () => sessionStorage.getItem("city") || ""
-  );
+  const [city,setCity] = useState<string>("");
+  // const [city, setCity] = useState<string>(
+  //   () => sessionStorage.getItem("city") || ""
+  // );
   const [starting,setStarting] = useState<Date>(new Date);
+  // const [starting, setStarting] = useState<Date>(
+  //   () => new Date(sessionStorage.getItem("starting") || new Date().toISOString()));
+
   const [returnDate,setReturnDate] = useState<Date>(new Date);
+  // const [returnDate,setReturnDate] = useState<Date>( 
+  //   () => new Date(sessionStorage.getItem("returnDate") || new Date().toISOString()));
+
   const [bookId,setBookId] = useState<string>("");
+
+  // const [bookId,setBookId] = useState<any>(
+  //   () => sessionStorage.getItem(bookId) || ""
+  // );
   
   const saveSearchValues = (city: string, starting: Date, returnDate: Date, bookId? :string) =>{
         setCity(city);
@@ -33,6 +43,13 @@ export const SearchContextProvider = ({children} : SearchContextProviderProps) =
         if(bookId){
           setBookId(bookId);
         }
+
+        // sessionStorage.setItem("city", city);
+        // sessionStorage.setItem("starting", starting.toISOString());
+        // sessionStorage.setItem("returnDate", returnDate.toISOString());
+        // if(bookId){
+        //   sessionStorage.setItem("bookId", bookId);
+        // }
       
   }
 

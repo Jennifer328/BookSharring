@@ -123,6 +123,8 @@ export type SearchParams = {
   page?: string;
 }
 
+// const {data: bookData} = useQuery(["searchBooks", searchParams], ()=> apiClient.searchBooks(searchParams));
+
 export const searchBooks = async (searchParams: SearchParams): Promise<BookSearchResponse> =>{
   const queryParams = new URLSearchParams();
   queryParams.append("city", searchParams.city || "");

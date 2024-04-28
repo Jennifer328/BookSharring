@@ -3,6 +3,7 @@ import { useSearchContext } from "../contexts/SearchContext"
 import * as apiClient from "../api-client";
 import { useState } from "react";
 import SearchResultCard from "../components/SearchResultCard";
+import Pagination from "../components/Pagination";
 
 const Search = () => {
 
@@ -17,6 +18,7 @@ const Search = () => {
   };
 
   const {data: bookData} = useQuery(["searchBooks", searchParams], ()=> apiClient.searchBooks(searchParams));
+  
   
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
@@ -33,6 +35,8 @@ const Search = () => {
         <span className="text-xl font-bold">
           {bookData?.pagination.total} Books found
           {search.city ? ` in  ${ search.city}` : ""}
+          
+          
         </span>
         {/*TODO SORT OPTIONS */}
       </div>
@@ -40,6 +44,14 @@ const Search = () => {
       {bookData?.data.map((book) =>(
          <SearchResultCard book={book}/>
       ))}
+
+      <div>
+        <Pagination  
+          page={bookData?.pagination.page || 1} 
+          pages={bookData?.pagination.pages || 1}
+          onPageChange={(page)=> setPage(page)}
+          />
+      </div>
 
      </div>
     </div>

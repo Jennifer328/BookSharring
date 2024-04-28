@@ -35,7 +35,7 @@ const SearchBar = () => {
         <input placeholder="type a city to search" 
                className="text-xs w-full focus:outline-none"
                value={city}
-               onChange={(event)=>{setCity(event.target.value)}}
+               onChange={(event)=>setCity(event.target.value)}
                />
        </div>
 

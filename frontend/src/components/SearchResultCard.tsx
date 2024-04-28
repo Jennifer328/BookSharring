@@ -1,5 +1,6 @@
 import { AiFillStar } from "react-icons/ai";
 import { BookType } from "../../../backend/src/shared/types";
+import { Link } from "react-router-dom";
 
 type Props ={
   book: BookType;
@@ -25,7 +26,7 @@ const SearchResultCard = ({book}: Props) => {
                   {book.type}
                 </span>
               </div>
-              <h2 className="text-2xl font-bold cursor-pointer">{book.name}</h2>
+              <Link to={`/detail/${book._id}`} className="text-2xl font-bold cursor-pointer">{book.name}</Link>
           </div>
 
          <div>
@@ -40,7 +41,7 @@ const SearchResultCard = ({book}: Props) => {
 
               <div className="flex flex-col items-end gap-1">
                   <span className="font-bold">CAD {book.pricePerWeek} per week</span>
-                  <button className="bg-green-600 text-white h-full p-2 font-bold text-xl max-w-fit hover:bg-green-400 rounded-md">View More</button>
+                  <Link to={`/detail/${book._id}`} className="bg-green-600 text-white h-full p-2 font-bold text-xl max-w-fit hover:bg-green-400 rounded-md">View More</Link>
               </div>
         </div>
          
