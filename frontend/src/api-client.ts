@@ -121,6 +121,10 @@ export type SearchParams = {
   starting?: string;
   returnDate?: string;
   page?: string;
+  types? :string[];
+  stars?: string[];
+  maxPrice?: string;
+  sortOption?:string;
 }
 
 // const {data: bookData} = useQuery(["searchBooks", searchParams], ()=> apiClient.searchBooks(searchParams));
@@ -131,6 +135,11 @@ export const searchBooks = async (searchParams: SearchParams): Promise<BookSearc
   queryParams.append("starting", searchParams.starting || "");
   queryParams.append("returnDate", searchParams.returnDate || "");
   queryParams.append("page", searchParams.page|| "");
+
+  queryParams.append("maxPrice", searchParams.maxPrice || "");
+  queryParams.append("sortOption", searchParams.sortOption || "");
+  searchParams.types?.forEach((type) => queryParams.append("types", type));
+  searchParams.stars?.forEach((star) => queryParams.append("stars", star));
 
   const response = await fetch(`${API_BASE_URL}/api/books/search?${queryParams}`);
 
