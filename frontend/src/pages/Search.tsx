@@ -5,12 +5,14 @@ import { useState } from "react";
 import SearchResultCard from "../components/SearchResultCard";
 import Pagination from "../components/Pagination";
 import StarRatingFilter from "../components/StarRatingFilter";
+import BookTypesFilter from "../components/BookTypesFilter";
 
 const Search = () => {
 
   const search = useSearchContext();
   const [page, setPage] = useState<number>(1);
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   const searchParams = {
     city: search.city,
@@ -18,6 +20,7 @@ const Search = () => {
     returnDate: search.returnDate.toISOString(),
     page: page.toString(),
     stars: selectedStars,
+    types: selectedTypes,
   };
 
   const { data: bookData } = useQuery(["searchBooks", searchParams], () => apiClient.searchBooks(searchParams));
@@ -31,6 +34,18 @@ const Search = () => {
    : prevStars.filter((star) => star !== starRating)
   )
   }
+
+  const handleBookTypeChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
+     const bookType = event.target.value;
+
+     setSelectedTypes((prevTypes) => 
+      event.target.checked 
+      ? [...prevTypes, bookType]
+      : prevTypes.filter((type) => type !== bookType)
+    )
+  }
+
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
       <div className="rounded-lg border border-slate-300 p-5 h-fit sticky top-10">
@@ -39,6 +54,7 @@ const Search = () => {
           < StarRatingFilter  
             selectedStars={selectedStars}
             onChange={handleStarsChange}/>
+          <BookTypesFilter selectedTypes={selectedTypes} onChange={handleBookTypeChange}/>
 
         </div>
       </div>
