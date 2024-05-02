@@ -15,6 +15,7 @@ const Search = () => {
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<number | undefined>();
+  const [sortOption,setSortOption] = useState<string>("");
 
   const searchParams = {
     city: search.city,
@@ -24,6 +25,7 @@ const Search = () => {
     stars: selectedStars,
     types: selectedTypes,
     maxPrice: selectedPrice?.toString(),
+    sortOption,
   };
 
   const { data: bookData } = useQuery(["searchBooks", searchParams], () => apiClient.searchBooks(searchParams));
@@ -63,14 +65,20 @@ const Search = () => {
       </div>
 
       <div className="flex flex-col gap-5">
-        <div className="felx justify-between items-center">
+        <div className="flex items-center justify-between">
           <span className="text-xl font-bold">
             {bookData?.pagination.total} Books found
           {search.city ? ` in  ${search.city}` : ""}
-
-
           </span>
-          {/*TODO SORT OPTIONS */}
+          <select 
+          className="p-2 border rounded-md"
+           value={sortOption} 
+           onChange={(event)=> setSortOption(event.target.value)}>
+            <option value="">Sort By</option>
+            <option value="starRating"> Star Rating</option>
+            <option value="pricePerWeekAsc">Price (low to high)</option>
+            <option value="pricePerWeekDesc">Price (high to low)</option>
+         </select>
         </div>
 
         {bookData?.data.map((book) => (
