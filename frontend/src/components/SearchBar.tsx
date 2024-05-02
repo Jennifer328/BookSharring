@@ -14,7 +14,7 @@ const SearchBar = () => {
   const [city, setCity] = useState<string>(search.city);
   const [starting, setStarting] = useState<Date>(search.starting);
   const [returnDate, setReturnDate] = useState<Date>(search.returnDate);
-  const [bookId, setBookId] = useState<string>(search.bookId);
+  //const [bookId, setBookId] = useState<string>(search.bookId);
 
   const handleSubmit = (event : FormEvent) =>{
         event.preventDefault();
