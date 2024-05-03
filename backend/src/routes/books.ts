@@ -2,9 +2,12 @@ import { error } from "console";
 import express, { Request, Response } from "express";
 import Book from "../models/book";
 import { BookSearchResponse } from "../shared/types";
+import { param, validationResult } from "express-validator";
 
 
 const router = express.Router();
+
+
 
 // /api/books/search?
 router.get("/search", async (req: Request, res: Response) => {
@@ -47,12 +50,31 @@ router.get("/search", async (req: Request, res: Response) => {
     };
 
     res.json(response);
-  } catch (e) {
+  } catch (error) {
     console.log("error", error);
     res.status(500).json({ message: "Something went wrong" });
   }
 });
 
+// /api/books/xxxx
+router.get("/:id",
+     [param("id").notEmpty().withMessage("Book ID is required")], 
+     async(req: Request, res:Response) => {
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+      }
+
+      const id = req.params.id.toString();
+
+  try{
+  const book = await Book.findById(id);
+  res.json(book);
+  }catch(error){
+    console.log("error",error);
+    res.status(500).json({message:"Error fetching book" });
+  }
+})
 
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};
