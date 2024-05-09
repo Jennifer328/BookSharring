@@ -2,7 +2,7 @@ import { useForm} from "react-hook-form";
 import { useMutation,useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link, useLocation} from "react-router-dom";
 
 export type SignInFormData = {
   email: string;
@@ -14,6 +14,7 @@ export type SignInFormData = {
 const SignIn = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();//library for fetching, caching, and updating data in React applications. Here is it used to update UI to reflect the latest data
 
   const {showToast} = useAppContext();
@@ -31,7 +32,7 @@ const SignIn = () => {
       //2. update UI
       await queryClient.invalidateQueries("validateToken");
       //2. navigate to the home page
-      navigate("/");
+      navigate(location.state?.from?.pathname||"/");
 
     },
     onError: (error: Error) =>{
