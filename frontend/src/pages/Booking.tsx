@@ -1,14 +1,14 @@
 
-import * as apiClicnet from "../api-client";
-import { useQuery } from "react-query";
-import BookingForm from "../forms/BookingForm/BookingForm";
+//import * as apiClicnet from "../api-client";
+//import { useQuery } from "react-query";
+//import BookingForm from "../forms/BookingForm/BookingForm";
 
 const Booking = () => {
 
-  const {data: currentUser} = useQuery(
-    "fetchCurrentUser",
-    apiClicnet.fetchCurrentUser
-  );
+  // const {data: currentUser} = useQuery(
+  //   "fetchCurrentUser",
+  //   apiClicnet.fetchCurrentUser
+  // );
  
    
 
