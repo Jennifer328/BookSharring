@@ -44,7 +44,7 @@ const GuestInfoForm = ({bookId,pricePerWeek} : Props) => {
 
   const onSubmit = (data: GuestInfoFormData) =>{
     search.saveSearchValues("", data.starting, data.returnDate);
-    navigate(`/book/${bookId}/booking`);
+    navigate(`/books/${bookId}/booking`);
   }
 
   

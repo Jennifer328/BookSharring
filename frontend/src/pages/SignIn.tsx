@@ -31,8 +31,8 @@ const SignIn = () => {
       showToast({message: "Sign in Successful!", type: "SUCCESS"});
       //2. update UI
       await queryClient.invalidateQueries("validateToken");
-      //2. navigate to the home page
-      navigate(location.state?.from?.pathname||"/");
+      //2. navigate to the home page is there is no previous location
+      navigate(location.state?.from?.pathname || "/");
 
     },
     onError: (error: Error) =>{

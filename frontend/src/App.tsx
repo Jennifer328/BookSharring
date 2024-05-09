@@ -8,6 +8,7 @@ import MyBooks from "./pages/MyBooks";
 import EditBook from "./pages/EditBook";
 import Search from "./pages/Search";
 import Detail from "./pages/Detail";
+import Booking from "./pages/Booking";
 
 
 const App = () =>{
@@ -26,6 +27,7 @@ const App = () =>{
           <Route path="/addbook" element={<Layout><AddBook/></Layout>}/>
           <Route path="/mybooks" element={<Layout><MyBooks/></Layout>}/>
           <Route path="/editbook/:bookId" element={<Layout><EditBook/></Layout>}/>
+          <Route path="/books/:bookId/booking" element={<Layout><Booking/></Layout>}/>
         </>}
         <Route path="/*"  element={<Navigate to="/"/>}/>
       </Routes>
