@@ -1,7 +1,7 @@
 import { error } from "console";
 import express, { Request, Response } from "express";
 import Book from "../models/book";
-import { BookSearchResponse, paymentIntentResponse } from "../shared/types";
+import { BookSearchResponse, BookingType, paymentIntentResponse } from "../shared/types";
 import { param, validationResult } from "express-validator";
 import Stripe from "stripe";
 import verifyToken from "../middleware/auth";
@@ -80,6 +80,9 @@ router.get("/:id",
   }
 });
 
+
+
+
 router.post(
     "/:bookId/bookings/payment-intent", 
     verifyToken, 
@@ -118,6 +121,45 @@ router.post(
   };
 
   res.send(response);
+});
+
+
+router.post("/:bookId/bookings", verifyToken, async (req: Request, res: Response) =>{
+  try{
+   const paymentIntentId = req.body.paymentIntentId;
+   const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId as string);
+   if(!paymentIntent){
+    return res.status(400).json({message: "Payment intent not found"});
+   }
+   //Check if the payment is made from the loggedin user
+   if(paymentIntent.metadata.bookId !== req.params.paymentIntentId || paymentIntent.metadata.userId !== req.userId){
+       return res.status(400).json({message: "payment intent mismatch"});
+   }
+
+   if(paymentIntent.status !== "succeeded"){
+    return res.status(400).json({message:`Payment intent not succeeded. Status: ${paymentIntent.status}`});
+   }
+
+   const newBooking : BookingType = {
+    ...req.body, 
+    userId:req.userId,
+   }
+
+   const book = await Book.findOneAndUpdate({_id:req.params.bookId},{
+    $push:{bookings: newBooking},
+   });
+
+   if(!book){
+    return res.status(400).json({message: "Book not found"});
+   }
+   
+   await book.save();
+   res.status(200).send();
+
+  }catch(error){
+   console.log(error);
+   return res.status(500).json({message: "Something went wrong"});
+  }
 });
 
 const constructSearchQuery = (queryParams: any) => {
