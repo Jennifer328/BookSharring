@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
-import { BookType } from "../shared/types";
+import { BookType, BookingType } from "../shared/types";
 
-
+const bookingSchema = new mongoose.Schema<BookingType>({
+   firstName: {type:String, required: true},
+   lastName: {type:String, required: true},
+   email: {type:String, required: true},
+   starting: {type: Date, required: true},
+   returnDate: {type:Date, required: true},
+   userId: {type: String, required:true},
+   totalCost:{type:Number, required: true},
+});
 
 
 const bookSchema = new mongoose.Schema<BookType>({
@@ -15,7 +23,8 @@ const bookSchema = new mongoose.Schema<BookType>({
     pricePerWeek:{type:Number, required: true},
     starRating: {type:Number, required: true, min: 1, max:5},
     imageUrls:[{type:String, required: true}],
-    lastUpdated: {type:Date, required: true}
+    lastUpdated: {type:Date, required: true},
+    bookings: [bookingSchema],
 });
 
 const Book = mongoose.model<BookType>("Book", bookSchema);

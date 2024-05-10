@@ -21,7 +21,19 @@ export type BookType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
+  bookings: BookingType[],
 };
+
+export type BookingType = {
+  _id: string,
+  userId: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  starting: Date,
+  returnDate: Date,
+  totalCost: number,
+}
 
 export type BookSearchResponse = {
   data: BookType[];
