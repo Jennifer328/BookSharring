@@ -170,7 +170,7 @@ export const fetchBookById = async (BookId : string): Promise<BookType> =>{
 
   return response.json();
 };
-
+//"/:bookId/bookings/payment-intent", 
 export const createPaymentIntent = async (bookId: string, numberOfWeeks: string): Promise<paymentIntentResponse> =>{
      const response = await fetch(`${API_BASE_URL}/api/books/${bookId}/bookings/payment-intent`, {
       credentials: "include",

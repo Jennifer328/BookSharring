@@ -102,7 +102,10 @@ router.post(
   const totalCost = book.pricePerWeek * numberOfWeeks;
 
   const paymentIntent = await stripe.paymentIntents.create({
-       amount: totalCost,
+    /*the amount property in the stripe.paymentIntents.create() method is expecting the amount to be specified in the smallest currency unit.
+    totalCost represents the total cost of the book rental in dollars, multiplying it by 100 converts it to cents, which is the expected format for the amount property in the Stripe API 
+    */
+       amount: totalCost * 100,
        currency: "cad",
        metadata: {
         bookId,

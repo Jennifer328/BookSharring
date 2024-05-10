@@ -18,7 +18,7 @@ const Booking = () => {
 
   useEffect(() =>{
     if(search.starting && search.returnDate){
-      const weeks = Math.abs(search.returnDate.getTime() - search.starting.getTime())/(1000 * 60 * 60 * 24 * 7);
+      const weeks = Math.abs(search.returnDate.getTime() - search.starting.getTime())/(1000 * 60 * 60 * 24*7);
 
       setNumberOfWeeks(Math.ceil(weeks));
     }
@@ -60,9 +60,8 @@ const Booking = () => {
         <Elements stripe={stripePromise}  options={{
             clientSecret: paymentIntentData.clientSecret,
         }}>
-             <BookingForm  currentUser={currentUser} />
+             <BookingForm  currentUser={currentUser} paymentIntent={paymentIntentData} />
         </Elements>
-       
          
       ) }
      
