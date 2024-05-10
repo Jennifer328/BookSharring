@@ -137,7 +137,7 @@ export type SearchParams = {
   stars?: string[];
   maxPrice?: string;
   sortOption?:string;
-}
+};
 
 // const {data: bookData} = useQuery(["searchBooks", searchParams], ()=> apiClient.searchBooks(searchParams));
 
@@ -160,7 +160,7 @@ export const searchBooks = async (searchParams: SearchParams): Promise<BookSearc
   }
 
   return response.json();
-}
+};
 
 export const fetchBookById = async (BookId : string): Promise<BookType> =>{
   const response = await fetch(`${API_BASE_URL}/api/books/${BookId}`);
@@ -169,4 +169,20 @@ export const fetchBookById = async (BookId : string): Promise<BookType> =>{
   }
 
   return response.json();
-}
+};
+
+export const createPaymentIntent = async (bookId: string, numberOfWeeks: string) =>{
+     const response = await fetch(`${API_BASE_URL}/api/books/${bookId}/bookings/payment-intent`, {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify({numberOfWeeks}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+     });
+
+     if(!response.ok){
+       throw new Error("Error fetching payment intent");
+     }
+     return response.json();
+};
