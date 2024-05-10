@@ -1,8 +1,12 @@
 import { error } from "console";
 import express, { Request, Response } from "express";
 import Book from "../models/book";
-import { BookSearchResponse } from "../shared/types";
+import { BookSearchResponse, paymentIntentResponse } from "../shared/types";
 import { param, validationResult } from "express-validator";
+import Stripe from "stripe";
+import verifyToken from "../middleware/auth";
+
+const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 
 
 const router = express.Router();
@@ -74,7 +78,47 @@ router.get("/:id",
     console.log("error",error);
     res.status(500).json({message:"Error fetching book" });
   }
-})
+});
+
+router.post(
+    "/:bookId/bookings/payment-intent", 
+    verifyToken, 
+    async (req: Request, res: Response) =>{
+  //1. totalCost
+  //2. bookId
+  //3. userId
+
+  const {numberOfWeeks} = req.body;
+  const bookId = req.params.bookId;
+
+  const book = await Book.findById(bookId);
+  if(!book){
+    return res.status(400).json({message: "Book not found"});
+  }
+
+  const totalCost = book.pricePerWeek * numberOfWeeks;
+
+  const paymentIntent = await stripe.paymentIntents.create({
+       amount: totalCost,
+       currency: "cad",
+       metadata: {
+        bookId,
+        userId: req.userId,
+       },
+  });
+
+  if(!paymentIntent.client_secret){
+    return res.status(500).json({message:"Error creating payment intent"});
+  }
+
+  const response  = {
+    paymentIntentId: paymentIntent.id,
+    clientSecret: paymentIntent.client_secret.toString(),
+    totalCost,
+  };
+
+  res.send(response);
+});
 
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};

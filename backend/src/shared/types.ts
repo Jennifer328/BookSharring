@@ -31,3 +31,9 @@ export type BookSearchResponse = {
     page: number;
   };
 };
+
+export type paymentIntentResponse = {
+  paymentIntentId: string,
+  clientSecret: string,
+  totalCost: number,
+}
