@@ -1,7 +1,7 @@
 
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import {BookSearchResponse, BookType, UserType} from "../../backend/src/shared/types";
+import {BookSearchResponse, BookType, UserType, paymentIntentResponse} from "../../backend/src/shared/types";
 
 
 
@@ -171,7 +171,7 @@ export const fetchBookById = async (BookId : string): Promise<BookType> =>{
   return response.json();
 };
 
-export const createPaymentIntent = async (bookId: string, numberOfWeeks: string) =>{
+export const createPaymentIntent = async (bookId: string, numberOfWeeks: string): Promise<paymentIntentResponse> =>{
      const response = await fetch(`${API_BASE_URL}/api/books/${bookId}/bookings/payment-intent`, {
       credentials: "include",
       method: "POST",
