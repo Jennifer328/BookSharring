@@ -2,6 +2,7 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
 import {BookSearchResponse, BookType, UserType, paymentIntentResponse} from "../../backend/src/shared/types";
+import { BookingFormData } from "./forms/BookingForm/BookingForm";
 
 
 
@@ -185,4 +186,20 @@ export const createPaymentIntent = async (bookId: string, numberOfWeeks: string)
        throw new Error("Error fetching payment intent");
      }
      return response.json();
+};
+
+
+export const createBooking = async (formData: BookingFormData) => {
+
+  const response = await fetch(`${API_BASE_URL}/api/books/${formData.bookId}/bookings`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body:JSON.stringify(formData),
+  });
+  if(!response.ok){
+    throw new Error("Error reserving the book");
+  }
 };

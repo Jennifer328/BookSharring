@@ -1,31 +1,77 @@
 import { useForm } from "react-hook-form";
 import { UserType, paymentIntentResponse } from "../../../../backend/src/shared/types"
-import { CardElement } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { StripeCardElement } from "@stripe/stripe-js";
+import { useSearchContext } from "../../contexts/SearchContext";
+import { useParams } from "react-router-dom";
+import { useMutation } from "react-query";
+import * as apiClient from "../../api-client";
 
 type Props = {
   currentUser :UserType;
   paymentIntent: paymentIntentResponse,
 }
 
-type BookingFormData = {
+export type BookingFormData = {
   firstName: string;
   lastName: string;
   email: string;
+  bookId: string;
+  starting: string,
+  returnDate: string;
+  paymentIntentId: string,
+  totalCost: number,
 }
 
 const BookingForm = ({currentUser, paymentIntent}:Props) => {
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const search = useSearchContext();
+  const {bookId} = useParams();
+
+  const {mutate: reserveBook} = useMutation(apiClient.createBooking, {
+    onSuccess: () => {
+
+    },
+    onError: () =>{
+
+    }
+  })
 
   const {handleSubmit, register} = useForm<BookingFormData>({
     defaultValues:{
       firstName: currentUser.firstName,
       lastName: currentUser.lastName,
-      email: currentUser.email
+      email: currentUser.email,
+      bookId: bookId,
+      starting: search.starting.toISOString(),
+      returnDate: search.returnDate.toISOString(),
+      totalCost: paymentIntent.totalCost,
+      paymentIntentId: paymentIntent.paymentIntentId,
     }});
 
-    console.log(paymentIntent);
+  const onSubmit = async (formData : BookingFormData) =>{
+    if(!stripe || !elements){
+      return;
+    }
+     const result = await stripe.confirmCardPayment(paymentIntent.clientSecret, {
+       payment_method: {
+        card: elements.getElement(CardElement) as StripeCardElement,
+       },
+     });
+
+     if(result.paymentIntent?.status === "succeeded"){
+      //book confirmed
+      reserveBook({...formData, paymentIntentId: result.paymentIntent.id})//add the most recent updated paymentIntentId to formData
+     }
+  }
     
   return (
-    <div className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5">
+    <form 
+      onSubmit={handleSubmit(onSubmit)}
+      className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5">
       <span className="text-3xl font-bold">Confirm Your Details</span>
       <div className="grid grid-cols-2 gap-6">
 
@@ -81,7 +127,11 @@ const BookingForm = ({currentUser, paymentIntent}:Props) => {
         <h3 className="font-semibold text-lg">Payment Details</h3>
         <CardElement id="payment-element" className="border rounded-md p-2 text-sm"/>
        </div>
-    </div>
+
+       <div className="flex justify-end">
+           <button type="submit" className="bg-green-600 text-white p-2 font-bold hover:bg-green-500 text-md">Confirm Reservation</button>
+       </div>
+    </form>
   )
 }
 
