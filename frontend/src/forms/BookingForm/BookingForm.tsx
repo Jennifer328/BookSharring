@@ -6,6 +6,7 @@ import { useSearchContext } from "../../contexts/SearchContext";
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import * as apiClient from "../../api-client";
+import { useAppContext } from "../../contexts/AppContext";
 
 type Props = {
   currentUser :UserType;
@@ -30,13 +31,14 @@ const BookingForm = ({currentUser, paymentIntent}:Props) => {
 
   const search = useSearchContext();
   const {bookId} = useParams();
+  const {showToast} = useAppContext();
 
-  const {mutate: reserveBook} = useMutation(apiClient.createBooking, {
+  const {mutate: reserveBook, isLoading} = useMutation(apiClient.createBooking, {
     onSuccess: () => {
-
+       showToast({message: "Book Reserved!", type: "SUCCESS"});
     },
     onError: () =>{
-
+      showToast({message: "Error reserving book!", type: "ERROR"});
     }
   })
 
@@ -129,7 +131,12 @@ const BookingForm = ({currentUser, paymentIntent}:Props) => {
        </div>
 
        <div className="flex justify-end">
-           <button type="submit" className="bg-green-600 text-white p-2 font-bold hover:bg-green-500 text-md">Confirm Reservation</button>
+           <button 
+             disabled={isLoading}
+             type="submit" 
+             className="bg-green-600 text-white p-2 font-bold hover:bg-green-500 text-md disabled:bg-gray-500">
+              {isLoading? "Saving" : "Confirm Reservation"}
+           </button>
        </div>
     </form>
   )
