@@ -191,7 +191,8 @@ export const createPaymentIntent = async (bookId: string, numberOfWeeks: string)
 
 export const createBooking = async (formData: BookingFormData) => {
 
-  const response = await fetch(`${API_BASE_URL}/api/books/${formData.bookId}/bookings`, {
+  const response = await fetch(`${API_BASE_URL}/api/books/${formData.bookId}/booking`, 
+  {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

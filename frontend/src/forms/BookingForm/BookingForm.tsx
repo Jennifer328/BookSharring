@@ -33,14 +33,17 @@ const BookingForm = ({currentUser, paymentIntent}:Props) => {
   const {bookId} = useParams();
   const {showToast} = useAppContext();
 
-  const {mutate: reserveBook, isLoading} = useMutation(apiClient.createBooking, {
-    onSuccess: () => {
+  const {mutate: reserveBook, isLoading} = useMutation(
+    apiClient.createBooking, 
+    {
+      onSuccess: () => {
        showToast({message: "Book Reserved!", type: "SUCCESS"});
     },
-    onError: () =>{
+      onError: () =>{
       showToast({message: "Error reserving book!", type: "ERROR"});
     }
-  })
+  });
+
 
   const {handleSubmit, register} = useForm<BookingFormData>({
     defaultValues:{
@@ -52,7 +55,8 @@ const BookingForm = ({currentUser, paymentIntent}:Props) => {
       returnDate: search.returnDate.toISOString(),
       totalCost: paymentIntent.totalCost,
       paymentIntentId: paymentIntent.paymentIntentId,
-    }});
+    }
+  });
 
   const onSubmit = async (formData : BookingFormData) =>{
     if(!stripe || !elements){
@@ -68,7 +72,7 @@ const BookingForm = ({currentUser, paymentIntent}:Props) => {
       //book confirmed
       reserveBook({...formData, paymentIntentId: result.paymentIntent.id})//add the most recent updated paymentIntentId to formData
      }
-  }
+  };
     
   return (
     <form 

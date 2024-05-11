@@ -127,15 +127,17 @@ router.post(
 });
 
 
-router.post("/:bookId/bookings", verifyToken, async (req: Request, res: Response) =>{
+
+router.post("/:bookId/booking", verifyToken, async (req: Request, res: Response) =>{
   try{
    const paymentIntentId = req.body.paymentIntentId;
    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId as string);
    if(!paymentIntent){
     return res.status(400).json({message: "Payment intent not found"});
-   }
+   };
+
    //Check if the payment is made from the loggedin user
-   if(paymentIntent.metadata.bookId !== req.params.paymentIntentId || paymentIntent.metadata.userId !== req.userId){
+   if(paymentIntent.metadata.bookId !== req.params.bookId || paymentIntent.metadata.userId !== req.userId){
        return res.status(400).json({message: "payment intent mismatch"});
    }
 
