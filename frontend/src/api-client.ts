@@ -204,3 +204,16 @@ export const createBooking = async (formData: BookingFormData) => {
     throw new Error("Error reserving the book");
   }
 };
+
+
+export const fetchMyBookings = async ():Promise<BookType[]> =>{
+  const response = await fetch(`${API_BASE_URL}/api/myBookings`, {
+    credentials: "include",
+  });
+
+  if(!response.ok){
+    throw new Error("Error fetching bookings")
+  }
+
+  return response.json();
+}

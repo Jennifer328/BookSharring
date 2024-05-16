@@ -6,6 +6,7 @@ import userRoutes from './routes/users';
 import authRoutes from './routes/auth';
 import myBooksRoutes from "./routes/mybooks";
 import bookRoutes from "./routes/books";
+import bookingRoutes from "./routes/myBooking";
 
 import cookieParser from "cookie-parser";
 import path from 'path';
@@ -38,6 +39,7 @@ app.use("/api/users",userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/mybooks",myBooksRoutes);
 app.use("/api/books", bookRoutes);
+app.use("/api/myBookings", bookingRoutes);
 
 //FOR DEPLOY USE
 app.get("*", (req: Request, res: Response) => {
