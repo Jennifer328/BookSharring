@@ -60,6 +60,18 @@ router.get("/search", async (req: Request, res: Response) => {
   }
 });
 
+//For Home page
+router.get("/",async(req:Request, res:Response) =>{
+  try{
+    const books = await Book.find().sort("-lastUpdated");
+    res.json(books);
+  }catch(error){
+    console.log(error);
+    return res.status(500).json({message: "Error fetching books"});
+  }
+
+});
+
 // /api/books/xxxx
 router.get("/:id",
      [param("id").notEmpty().withMessage("Book ID is required")], 
@@ -166,6 +178,8 @@ router.post("/:bookId/booking", verifyToken, async (req: Request, res: Response)
    return res.status(500).json({message: "Something went wrong"});
   }
 });
+
+
 
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};
