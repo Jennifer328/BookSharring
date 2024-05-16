@@ -3,7 +3,9 @@ import * as apiClient from "../api-client";
 import LatestBookCard from "../components/LatestBookCard ";
 
 const Home = () => {
+
   const {data: books} = useQuery("fetchAllBooks", ()=> apiClient.fetchAllBooks());
+
   const topRowBooks = books?.slice(0,2) || [];
   const bottomRowBooks = books?.slice(2) || [];
 
@@ -15,13 +17,13 @@ const Home = () => {
 
          <div className="grid gap-4">
 
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
                   {topRowBooks.map((book)=>(
                     <LatestBookCard  book={book}/>
                   ))}
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid lg:grid-cols-3 gap-4">
                {bottomRowBooks.map((book)=>(
                 <LatestBookCard  book={book}/>
                ))}
@@ -29,7 +31,7 @@ const Home = () => {
 
          </div>
     </div>
-  )
-}
+  );
+};
 
 export default Home

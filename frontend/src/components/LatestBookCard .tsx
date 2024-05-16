@@ -2,13 +2,13 @@ import { BookType } from "../../../backend/src/shared/types";
 import {Link} from "react-router-dom";
 
 type Props = {
-  book : BookType
-}
+  book: BookType;
+};
 
 const LatestBookCard  = ({book}:Props) => {
   return (
     <Link 
-      to={`/detail/${book._id}}`}
+      to={`/detail/${book._id}`}
       className="relative cursor-pointer overflow-hidden rounded-md">
 
          <div className="h-[300px]">
@@ -16,7 +16,7 @@ const LatestBookCard  = ({book}:Props) => {
          </div>
 
          <div className="absolute bottom-0 p-4 bg-black bg-opacity-50 w-full rounded-b-md">
-               <span className="text-white font-bold -tracking-tight text-3xl">{book.name}</span>
+               <span className="text-white font-bold -tracking-tight text-xl">{book.name}</span>
          </div>
     </Link>
   )
