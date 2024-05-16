@@ -65,4 +65,7 @@ test("Should reserve book", async({page}) => {
 
   await page.getByRole("button", {name: "Confirm Reservation"}).click();
   await expect(page.getByText("Book Reserved!")).toBeVisible();
+
+  await page.getByRole("link", {name: "Orders"}).click();
+  await expect(page.getByText("Pragmatic Programmer, The: Your journey to mastery, 20th Anniversary Edition")).toBeVisible();
 });
