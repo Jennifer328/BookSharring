@@ -9,6 +9,7 @@ import EditBook from "./pages/EditBook";
 import Search from "./pages/Search";
 import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
+import MyBookings from "./pages/MyBookings";
 
 
 const App = () =>{
@@ -26,6 +27,7 @@ const App = () =>{
         {isLoggedIn && <>
           <Route path="/addbook" element={<Layout><AddBook/></Layout>}/>
           <Route path="/mybooks" element={<Layout><MyBooks/></Layout>}/>
+          <Route path="/mybookings" element={<Layout><MyBookings/></Layout>}/>
           <Route path="/editbook/:bookId" element={<Layout><EditBook/></Layout>}/>
           <Route path="/books/:bookId/booking" element={<Layout><Booking/></Layout>}/>
         </>}

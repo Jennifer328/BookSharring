@@ -7,12 +7,11 @@ const router = express.Router();
 
 router.get("/", verifyToken, async (req: Request,res: Response) =>{
    try{
-
     const books = await Book.find({
       bookings: {$elemMatch: {userId: req.userId}},
     });
 
-    const result = books.map((book) => {
+    const results = books.map((book) => {
       const userBookings = book.bookings.filter((booking) => booking.userId === req.userId);
       const bookWithUserBookings:  BookType = {
          ...book.toObject(), //change mongoose book to JavaSript object
@@ -22,7 +21,7 @@ router.get("/", verifyToken, async (req: Request,res: Response) =>{
       return bookWithUserBookings;
     });
 
-    res.status(200).send(res);
+    res.status(200).send(results);
 
    }catch(error){
     console.log(error);
