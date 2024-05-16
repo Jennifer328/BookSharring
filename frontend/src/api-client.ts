@@ -163,6 +163,16 @@ export const searchBooks = async (searchParams: SearchParams): Promise<BookSearc
   return response.json();
 };
 
+
+export const fetchAllBooks = async (): Promise<BookType[]> =>{
+  const response = await fetch(`${API_BASE_URL}/api/books`);
+  if(!response.ok){
+    throw new Error("Error fetching books");
+  }
+
+  return response.json();
+};
+
 export const fetchBookById = async (BookId : string): Promise<BookType> =>{
   const response = await fetch(`${API_BASE_URL}/api/books/${BookId}`);
   if(!response.ok){
@@ -216,4 +226,5 @@ export const fetchMyBookings = async ():Promise<BookType[]> =>{
   }
 
   return response.json();
-}
+};
+
