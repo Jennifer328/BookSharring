@@ -16,7 +16,7 @@ const LatestBookCard  = ({book}:Props) => {
          </div>
 
          <div className="absolute bottom-0 p-4 bg-black bg-opacity-50 w-full rounded-b-md">
-               <span className="text-white font-bold -tracking-tight text-xl">{book.name}</span>
+               <span className="text-white text-md font-bold -tracking-tight md:text-lg lg:text-xl">{book.name}</span>
          </div>
     </Link>
   )

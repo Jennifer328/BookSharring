@@ -17,13 +17,13 @@ const Home = () => {
 
          <div className="grid gap-4">
 
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
                   {topRowBooks.map((book)=>(
                     <LatestBookCard  book={book}/>
                   ))}
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
                {bottomRowBooks.map((book)=>(
                 <LatestBookCard  book={book}/>
                ))}
